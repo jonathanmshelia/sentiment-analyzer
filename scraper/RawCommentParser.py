@@ -3,7 +3,7 @@ from scraper.Comment import Comment
 
 class RawCommentParser:
     def __init__(self):
-        self.comments = []
+        pass
 
     def parse_comments(self, data: dict) -> List[Comment]:
         """Parse comments from Reddit API response"""

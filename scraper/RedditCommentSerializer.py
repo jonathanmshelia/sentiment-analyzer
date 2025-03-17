@@ -20,6 +20,19 @@ class RedditCommentSerializer:
             for comment in flat_comments:
                 writer.writerow(comment)
 
+    def append_to_csv(self, comments: List[Comment], path: str, header: bool = False) -> None:
+        """Append comments to a CSV file"""
+        flat_comments = self._flatten_comments(comments)
+        fieldnames = Comment.__dataclass_fields__.keys()
+        fieldnames = [field if field != '_id' else 'id' for field in fieldnames]
+        fieldnames.remove('children')
+        with open(path, 'a', newline='', encoding='utf-8') as csvfile:
+            writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+            if header:
+                writer.writeheader()
+            for comment in flat_comments:
+                writer.writerow(comment)
+
     def write_to_json(self, comments: List[Comment], path: str) -> None:
         """Write comments to a JSON file"""
         flat_comments = self._flatten_comments(comments)
